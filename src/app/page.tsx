@@ -139,7 +139,7 @@ const StartupRunwayEstimator: React.FC = () => {
       <div className="grid grid-cols-1 gap-4">
         <Card className="col-span-1 bg-white bg-opacity-90">
             <CardHeader>
-            <CardTitle>Runway Projection ~{runwayData.length} months</CardTitle>
+            <CardTitle>Runway Projection ~{runwayData.length} months, estimating a 10% increase in monthly expenses</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={400}>
@@ -370,7 +370,8 @@ const StartupRunwayEstimator: React.FC = () => {
           </Card>
         </div>
         <footer className="text-center text-white mt-8">
-        <p className="text-sm">Made by <a href="https://niraj.fyi" target="_blank" rel="noopener noreferrer">niraj.fyi</a> and AI</p>
+        <p className="text-m">by <a href="https://niraj.fyi" target="_blank" rel="noopener noreferrer">niraj.fyi</a> and ai</p>
+        <span className='text-xs'><a className="text-blue-500" target="_blank" rel="noopener noreferrer" href="https://buymeacoffee.com/nirajftw">~</a></span>
       </footer>
       </div>
     </div>
