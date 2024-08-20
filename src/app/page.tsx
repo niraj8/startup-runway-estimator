@@ -369,6 +369,9 @@ const StartupRunwayEstimator: React.FC = () => {
             </CardContent>
           </Card>
         </div>
+        <footer className="text-center text-white mt-8">
+        <p className="text-sm">Made by <a href="https://niraj.fyi" target="_blank" rel="noopener noreferrer">niraj.fyi</a> and AI</p>
+      </footer>
       </div>
     </div>
   );
