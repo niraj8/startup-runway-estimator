@@ -1,11 +1,11 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { format, addMonths } from 'date-fns';
+import { format, addMonths, differenceInMonths } from 'date-fns';
 
 type EngineerType = 'junior' | 'senior';
 type EngineerLocation = 'onshore' | 'offshore';
@@ -52,6 +52,7 @@ const defaultOfficeExpenses = {
 };
 
 const StartupRunwayEstimator: React.FC = () => {
+  const [foundingDate, setFoundingDate] = useState<Date>(new Date());
   const [totalFunding, setTotalFunding] = useState<number>(4000000);
   const [engineeringCosts, setEngineeringCosts] = useState<EngineeringCosts>({
     juniorOnshore: { count: 1, salary: 60000 },
@@ -91,24 +92,23 @@ const StartupRunwayEstimator: React.FC = () => {
       let remainingFunds = totalFunding - acquisitionsCost + cloudCredits;
       let month = 0;
       let monthlyBurn = initialMonthlyBurn;
-      const currentDate = new Date();
-  
+    
       while (remainingFunds > 0) {
-        const monthDate = addMonths(currentDate, month);
-        runway.push({ 
-          month: format(monthDate, 'MMM yyyy'), 
-          runway: Math.max(remainingFunds, 0), 
-          monthlyBurn 
-        });
-        remainingFunds -= monthlyBurn;
-        monthlyBurn *= 1.1; // Increase burn rate by 10% each month
-        month++;
+      const monthDate = addMonths(foundingDate, month);
+      runway.push({
+        month: format(monthDate, 'MMM yyyy'),
+        runway: Math.max(remainingFunds, 0),
+        monthlyBurn
+      });
+      remainingFunds -= monthlyBurn;
+      monthlyBurn *= 1.1; // Increase burn rate by 10% each month
+      month++;
       }
-  
+
       setRunwayData(runway);
     };
     calculateRunway();
-  }, [totalFunding, engineeringCosts, saasProducts, marketingBudget, inOfficeEmployees, acquisitionsCost, cloudCredits, cloudMonthlyExpense]);
+  }, [totalFunding, engineeringCosts, saasProducts, marketingBudget, inOfficeEmployees, acquisitionsCost, cloudCredits, cloudMonthlyExpense, foundingDate]);
 
   const handleEngineeringCostChange = (
     type: EngineerType,
@@ -139,7 +139,7 @@ const StartupRunwayEstimator: React.FC = () => {
       <div className="grid grid-cols-1 gap-4">
         <Card className="col-span-1 bg-white bg-opacity-90">
             <CardHeader>
-            <CardTitle>Runway Projection ~{runwayData.length} months, estimating a 10% increase in monthly expenses</CardTitle>
+            <CardTitle>Runway Projection ~{runwayData.length - differenceInMonths(new Date(), foundingDate)} months, estimating a 10% increase in monthly expenses</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={400}>
@@ -171,7 +171,16 @@ const StartupRunwayEstimator: React.FC = () => {
           </CardContent>
         </Card>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+
+        <Card>
+            <CardHeader>
+              <CardTitle>Founding Date</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Input type="date" value={format(foundingDate, 'yyyy-MM-dd')} onChange={(e) => setFoundingDate(new Date(e.target.value))} />
+            </CardContent>
+          </Card>
           <Card>
             <CardHeader>
               <CardTitle>Total Funding</CardTitle>
