@@ -139,7 +139,7 @@ const StartupRunwayEstimator: React.FC = () => {
       <div className="grid grid-cols-1 gap-4">
         <Card className="col-span-1 bg-white bg-opacity-90">
             <CardHeader>
-            <CardTitle>Runway Projection ~{runwayData.length - differenceInMonths(new Date(), foundingDate)} months, estimating a 10% increase in monthly expenses</CardTitle>
+            <CardTitle>Runway Projection ~{runwayData.length - differenceInMonths(new Date(), foundingDate)} months, estimated assuming a 10% increase in monthly expenses</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={400}>
