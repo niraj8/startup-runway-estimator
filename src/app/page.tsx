@@ -164,6 +164,7 @@ const StartupRunwayEstimator: React.FC = () => {
                   ]}
                 />
                 <Legend />
+                <ReferenceLine yAxisId="left" x={"Aug 2024"} stroke="red" label={{ value: "Today", angle: -90, position: 'insideLeft', offset: 8}}  />
                 <Line yAxisId="left" type="monotone" dataKey="runway" stroke="#8884d8" activeDot={{ r: 8 }} />
                 <Line yAxisId="right" type="monotone" dataKey="monthlyBurn" stroke="#82ca9d" />
               </LineChart>
